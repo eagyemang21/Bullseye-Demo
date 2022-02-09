@@ -1,6 +1,8 @@
+
 const enem1 = document.querySelector("#cpone");
 const enem2 = document.querySelector("#cptwo");
 const enem3 = document.querySelector("#cpthree");
+
 
 enem1.addEventListener("click", () => {
   if (enem1.innerText > 0) {
@@ -41,3 +43,20 @@ document.body.addEventListener('keydown', function(event){
         break;
     }
 });
+
+
+const result = hitCounter =>{
+    if(enem1.innerText === 0 || enem1.innerText === 0 || enem3.innerText === 0){
+        return "Game Over"
+    }
+    //implement the button here for restart and refresh the game
+};
+
+
+//health counter obj 
+//the value is the number of shots the computer hits on you 
+//afterwards, we make it to where they 
+//health counter key 
+
+//let healthPlayer1 /*(could be for player 1)*/ = {100}
+//let healthComputer /*(would be for computer obj)*/ = {100}

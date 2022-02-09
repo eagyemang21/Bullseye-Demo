@@ -1,1 +1,21 @@
+body {
+	background-color: grey;
+ 	text-align: center;
+    
+}
 
+
+.box {
+    background-color: black;
+    width: 100px;
+    height: 50px;
+    display: inline-block;
+}
+
+.computer-ground {
+	margin-top: 100px;
+}
+
+.player-ground {
+	margin-top: 200px;
+}

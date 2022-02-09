@@ -11,7 +11,7 @@ const result = hitCounter =>{
         return "Game Over"
     }
     //implement the button here for restart and refresh the game
-    //
+    
 }
 
 
@@ -20,6 +20,6 @@ const result = hitCounter =>{
 //afterwards, we make it to where they 
 //health counter key 
 
-let healthPlayer1 /*(could be for player 1)*/ = {100}
-let healthComputer /*(would be for computer obj)*/ = {100}
+//let healthPlayer1 /*(could be for player 1)*/ = {100}
+//let healthComputer /*(would be for computer obj)*/ = {100}
 

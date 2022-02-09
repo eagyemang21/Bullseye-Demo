@@ -1,1 +1,51 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
 
+body {
+  background-color: grey;
+  text-align: center;
+}
+
+.box {
+  background-color: black;
+  width: 100px;
+  height: 50px;
+  display: inline-block;
+}
+
+.enemyBox {
+  background-color: black;
+  width: 100px;
+  height: 50px;
+  display: inline-block;
+}
+
+.computer-ground {
+  margin-top: 100px;
+}
+
+.player-ground {
+  margin-top: 200px;
+}
+
+.health {
+  color: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom {
+  /* The second value here is a fallback. */
+  cursor: url(https://ih1.redbubble.net/image.1226506290.6117/aps,504x498,small,transparent-pad,600x600,f8f8f8.jpg),
+    auto;
+
+  /* You may need coordinates to adjust the pointer
+       for example, the custom cursor is circular and you want
+       the middle to be where you click */
+  cursor: url(https://ih1.redbubble.net/image.1226506290.6117/aps,504x498,small,transparent-pad,600x600,f8f8f8.jpg)
+      30 30,
+    move;
+}

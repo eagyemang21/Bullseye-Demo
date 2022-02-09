@@ -3,12 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width, initial-scale=1.0">
-    <script src="https://unpkg.com/kaboom/dist/kaboom.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
-<body>
-    
-</body>
-</html>
+<h1>Bulls-Eye</h1>
 
+<body class='custom'>
+    <div class="computer-ground custom">
+        <div class="enemyBox" id="cpone">
+            <div class="health">300</div>
+        </div>
+        <div class="enemyBox" id="cptwo">
+            <div class="health">300</div>
+        </div>
+        <div class="enemyBox" id="cpthree">
+            <div class="health">300</div>
+        </div>
+    </div>
+    <div class="player-ground">
+        <div class="box" id="playerone"></div>
+        <div class="box" id="playertwo"></div>
+        <div class="box" id="playerthree"></div>
+    </div>
+    <p id="GFG_UP" style="font-size: 16px;">
+        Press an arrow key and click the
+      button to know which key was pressed
+      last time.
+    </p>
+    <button onclick="gfg_Run()">
+        Detect Arrow key
+    </button>
+    <p id="GFG_DOWN" 
+       style="color:green;
+              font-size: 20px;
+              font-weight: bold;">
+    </p>
+    <script src="index.js"></script>
+</body>
+
+</html>

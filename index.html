@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,12 +9,19 @@
     <title>Document</title>
 </head>
 <h1>Bulls-Eye</h1>
-<body>
-    <div class="computer-ground">
-        <div class="box" id="cpone"></div>
-        <div class="box" id="cptwo"></div>
-        <div class="box" id="cpthree"></div>
-     </div>
+
+<body class='custom'>
+    <div class="computer-ground custom">
+        <div class="enemyBox" id="cpone">
+            <div class="health">300</div>
+        </div>
+        <div class="enemyBox" id="cptwo">
+            <div class="health">300</div>
+        </div>
+        <div class="enemyBox" id="cpthree">
+            <div class="health">300</div>
+        </div>
+    </div>
     <div class="player-ground">
         <div class="box" id="playerone"></div>
         <div class="box" id="playertwo"></div>
@@ -21,4 +29,5 @@
     </div>
     <script src="index.js"></script>
 </body>
+
 </html>

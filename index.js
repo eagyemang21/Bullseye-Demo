@@ -22,3 +22,22 @@ enem3.addEventListener("click", () => {
   }
   enem3.style.backgroundColor = "red";
 });
+
+let el_up = document.getElementById("GFG_UP");
+let el_down = document.getElementById("GFG_DOWN");
+let str = 'No key pressed';
+  
+function gfg_Run() {
+    el_down.innerHTML = str;
+}
+document.body.addEventListener('keydown', function(event){
+    const key = event.key;
+    switch (key) {
+        case "ArrowLeft":
+        str = 'Left';
+        break;
+        case "ArrowRight":
+        str = 'Right';
+        break;
+    }
+});

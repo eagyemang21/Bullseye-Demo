@@ -8,7 +8,7 @@ function setup() {
 
   class Player {
     constructor() {
-      this.pos = createVector(width / 2, height / 2);
+      this.pos = createVector(width / 2, height / 1.1);
     }
 
     draw() {

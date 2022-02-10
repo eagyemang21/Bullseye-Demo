@@ -1,6 +1,7 @@
 let player;
+let enemy;
 function setup() {
-  let canvas = createCanvas(700, 700);
+  let canvas = createCanvas(500, 500);
   background(255, 0, 200);
   canvas.style("display", "block");
   canvas.center();
@@ -30,12 +31,24 @@ function setup() {
     }
   }
 
+  class Enemy {
+    constructor() {
+        this.pos = createVector(width / 2, height / 9);
+    }
+    draw() {
+      rect(this.pos.x, this.pos.y, 40, 50);
+    }
+  }
+  
+  enemy = new Enemy()
+
   player = new Player();
 }
 
 function draw() {
   background(220);
   player.draw();
+  enemy.draw();
   player.update();
 }
 

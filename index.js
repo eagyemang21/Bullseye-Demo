@@ -19,10 +19,10 @@ function setup() {
       let xSpeed = 0;
       let ySpeed = 0;
       if (keyIsDown(37)) {
-        xSpeed = -2;
+        xSpeed = -4;
       }
       if (keyIsDown(39)) {
-        xSpeed = 2;
+        xSpeed = 4;
       }
       if (keyIsDown(32)) {
         player.shoot();

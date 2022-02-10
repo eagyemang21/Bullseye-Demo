@@ -1,3 +1,32 @@
+let player;
+function setup() {
+  let canvas = createCanvas(700, 700);
+  background(255, 0, 200);
+  canvas.style('display', 'block');
+  canvas.center();
+  
+  class Player {
+    constructor() {
+      this.pos = createVector(width / 2, height / 2)
+    }
+  
+    draw() {
+      rect(this.pos.x, this.pos.y, 20, 20);
+    }
+    
+    update() {
+    let xSpeed = 0;
+    let ySpeed = 0;
+    if (keyIsDown(37)) {
+      xSpeed = -2;
+    }
+    if (keyIsDown(39)) {
+      xSpeed = 2;
+    }
+    if (keyIsDown(32)) {
+      player.shoot();
+    }
+    this.pos.add(xSpeed, ySpeed);
 
 const enem1 = document.querySelector("#cpone");
 const enem2 = document.querySelector("#cptwo");
@@ -15,24 +44,17 @@ enem2.addEventListener("click", () => {
   if (enem2.innerText > 0) {
     enem2.innerText -= 100;
   }
-  enem2.style.backgroundColor = "red";
-});
-
-enem3.addEventListener("click", () => {
-  if (enem3.innerText > 0) {
-    enem3.innerText -= 100;
   }
-  enem3.style.backgroundColor = "red";
-});
-
-let el_up = document.getElementById("GFG_UP");
-let el_down = document.getElementById("GFG_DOWN");
-let str = 'No key pressed';
-  
-function gfg_Run() {
-    el_down.innerHTML = str;
+  player = new Player();
 }
-document.body.addEventListener('keydown', function(event){
+
+function draw() {
+  background(220);
+  player.draw();
+  player.update(); 
+}
+
+    document.body.addEventListener('keydown', function(event){
     const key = event.key;
     switch (key) {
         case "ArrowLeft":

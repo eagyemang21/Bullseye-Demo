@@ -1,6 +1,4 @@
-kaboom({
-}
-);
+kaboom();
 
 loadBean();
 
@@ -42,11 +40,3 @@ onKeyPress("space", () => {
   // spawnBullet(player.pos.sub(5, 90));
   spawnBullet(player.pos.add(30, 0));
 });
-
-function Collision() {
-  kaboom.add([
-    kaboom.pos(0, kaboom.height()),
-    kaboom.rect(kaboom.width(), 50),
-    kaboom.solid()
-  ])
-}

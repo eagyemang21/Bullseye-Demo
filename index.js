@@ -1,65 +1,52 @@
-let player;
-let enemy;
-function setup() {
-  let canvas = createCanvas(500, 500);
-  background(255, 0, 200);
-  canvas.style("display", "block");
-  canvas.center();
-
-  class Player {
-    constructor() {
-      this.pos = createVector(width / 2, height / 1.1);
-    }
-
-    draw() {
-      rect(this.pos.x, this.pos.y, 20, 20);
-    }
-
-    update() {
-      let xSpeed = 0;
-      let ySpeed = 0;
-      if (keyIsDown(37)) {
-        xSpeed = -2;
-      }
-      if (keyIsDown(39)) {
-        xSpeed = 2;
-      }
-      if (keyIsDown(32)) {
-        player.shoot();
-      }
-      this.pos.add(xSpeed, ySpeed);
-    }
-  }
-
-  class Enemy {
-    constructor() {
-        this.pos = createVector(width / 2, height / 9);
-    }
-    draw() {
-      rect(this.pos.x, this.pos.y, 40, 50);
-    }
-  }
-  
-  enemy = new Enemy()
-
-  player = new Player();
+kaboom({
 }
+);
 
-function draw() {
-  background(220);
-  player.draw();
-  enemy.draw();
-  player.update();
-}
+loadBean();
 
-document.body.addEventListener("keydown", function (event) {
-  const key = event.key;
-  switch (key) {
-    case "ArrowLeft":
-      str = "Left";
-      break;
-    case "ArrowRight":
-      str = "Right";
-      break;
-  }
+const SPEED = 800;
+
+const player = add([
+  sprite("bean"),
+  // center() returns the center point vec2(width() / 2, height() / 2)
+  pos(vec2(width() / 2.1, height() / 1.1)),
+]);
+
+onKeyDown("left", () => {
+  // .move() is provided by pos() component, move by pixels per second
+  player.move(-SPEED, 0);
 });
+
+onKeyDown("right", () => {
+  player.move(SPEED, 0);
+});
+
+const BULLET_SPEED = 1000;
+
+function spawnBullet(p) {
+  add([
+    rect(12, 48),
+    area(),
+    pos(p),
+    origin("center"),
+    color(127, 127, 255),
+    outline(4),
+    move(UP, BULLET_SPEED),
+    cleanup(),
+    // strings here means a tag
+    "bullet",
+  ]);
+}
+
+onKeyPress("space", () => {
+  // spawnBullet(player.pos.sub(5, 90));
+  spawnBullet(player.pos.add(30, 0));
+});
+
+function Collision() {
+  kaboom.add([
+    kaboom.pos(0, kaboom.height()),
+    kaboom.rect(kaboom.width(), 50),
+    kaboom.solid()
+  ])
+}

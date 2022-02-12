@@ -1,5 +1,32 @@
-* {
-  padding: 0px;
-  margin: 0px;
-  height: 100%;
+body {
+  width: 800px !important;
+  height: 700px !important;
+  /* padding-left: 200px; */
+  padding-top: 150px;
+  background-color: black;
+  display: flex;
+  margin-left: 50px !important;
+}
+
+.document {
+  display: flex;
+}
+
+img {
+  display: flex;
+  margin-left: 100px !important;
+  margin-right: 100px !important;
+}
+
+.gameName {
+  font-size: 100px;
+  font-family:'Creepster', cursive;
+  margin-left: 40px;
+  color: #dc3545;
+  text-shadow: 2px 2px 5px #ffcd39;
+}
+
+h1 {
+  margin-left: 50px !important;
+  margin-right: 50px;
 }

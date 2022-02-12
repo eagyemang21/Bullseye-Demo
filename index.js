@@ -11,13 +11,18 @@ const player = add([
 ]);
 
 onKeyDown("left", () => {
-  // .move() is provided by pos() component, move by pixels per second
-  player.move(-SPEED, 0);
-});
+  player.move(-SPEED, 0)
+  if (player.pos.x < 0) {
+    player.pos.x = width()
+  }
+})
 
 onKeyDown("right", () => {
-  player.move(SPEED, 0);
-});
+  player.move(SPEED, 0)
+  if (player.pos.x > width()) {
+    player.pos.x = 0
+  }
+})
 
 const BULLET_SPEED = 1000;
 

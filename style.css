@@ -1,9 +1,9 @@
 body {
-  width: 800px !important;
-  height: 700px !important;
-  /* padding-left: 200px; */
+  width: 750px !important;
+  height: 650px !important;
+  padding-left: 300px;
   padding-top: 150px;
-  background-color: black;
+  background-color: #002247;
   display: flex;
   margin-left: 50px !important;
 }
@@ -20,13 +20,20 @@ img {
 
 .gameName {
   font-size: 100px;
-  font-family:'Creepster', cursive;
-  margin-left: 40px;
+  font-family:'VT323';
+  color: #a5e5d5;
+  /* text-shadow: 1px 1px 0px #ffcd39; */
+}
+
+.secondName {
+  color: white;
+  padding-top: -130px;
+  font-family: "VT323";
+  font-size: 100px;
   color: #dc3545;
-  text-shadow: 2px 2px 5px #ffcd39;
 }
 
 h1 {
-  margin-left: 50px !important;
-  margin-right: 50px;
+  margin-left: -80px !important;
+  margin-right: 90px;
 }

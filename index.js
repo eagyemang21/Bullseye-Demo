@@ -1,10 +1,10 @@
 kaboom({
-  background: [0, 0, 0],
+  background: [213, 251, 249],
 });
  
 let bgImage = loadSprite(
   "background",
-  "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/54ff7af5-2e49-471e-8efc-69c98615ab82/d128hmk-5d073adb-0821-44d1-a2bf-1e936f5b16b1.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzU0ZmY3YWY1LTJlNDktNDcxZS04ZWZjLTY5Yzk4NjE1YWI4MlwvZDEyOGhtay01ZDA3M2FkYi0wODIxLTQ0ZDEtYTJiZi0xZTkzNmY1YjE2YjEuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.rrEKAOowLqMQiuUOrbKG4fWCAfn71GhnUWUirLQzy-o"
+  "planets.jpg"
 )
  
 let background = add([
@@ -43,7 +43,7 @@ const SPEED = 800;
 const player = add([
   sprite("apple"),
   // center() returns the center point vec2(width() / 2, height() / 2)
-  pos(vec2(width() / 2.1, height() / 1.1)),
+  pos(vec2(width() / 2.1, height() / 1.2)),
 ]);
  
 onKeyDown("left", () => {
@@ -126,11 +126,11 @@ add([
   fixed(),
 ])
  
-const score = add([
-  text(0),
-  pos(12, 12),
-  fixed(),
-])
+let score = 0;
+const scoreLabel = add([
+  text(score),
+  pos(24, 24)
+]);
  
 const ENEMY_SPEED = 160
  
@@ -139,10 +139,10 @@ const ENEMY_SPEED = 160
 const enemy = add([
   sprite("alien2"),
   pos(width() / 4, height() / 5),
-  scale(4),
+  scale(2),
   origin("center"),
   // This enemy cycle between 3 states, and start from "idle" state
-  state("idle", [ "idle", "attack", "move", ]),
+  state("attack", [ "idle", "attack", "move", ]),
   "enemy",
   solid(),
   area(),
@@ -156,7 +156,7 @@ enemy.onStateEnter("idle", async () => {
 enemy.onStateEnter("attack", async () => {
  
   // Don't do anything if player doesn't exist anymore
-  if (player.exists()) {
+  if (player.exists() && enemy.exists()) {
  
     const dir = player.pos.sub(enemy.pos).unit()
  
@@ -178,30 +178,43 @@ enemy.onStateEnter("attack", async () => {
  
 })
  
-// enemy.onStateEnter("move", async () => {
-//  await wait(2)
-//  enemy.enterState("idle")
-// })
+enemy.onStateEnter("move", async () => {
+ await wait(2)
+ enemy.enterState("idle")
+})
  
-// enemy.onStateUpdate("move", () => {
-//  if (!player.exists()) return
-//  const dir = player.pos.sub(enemy.pos).unit()
-//  enemy.move(dir.scale(ENEMY_SPEED))
-// })
+enemy.onStateUpdate("move", () => {
+ if (!player.exists()) return
+ const dir = player.pos.sub(enemy.pos).unit()
+ enemy.move(dir.scale(ENEMY_SPEED))
+})
  
-// // Have to manually call enterState() to trigger the onStateEnter("move") event we defined above.
-// enemy.enterState("attack")
- 
-onCollide("bullet", "enemy", (e) => {
-  addKaboom(enemy.pos.add(0))
-  destroy(enemy)
+// Have to manually call enterState() to trigger the onStateEnter("move") event we defined above.
+enemy.enterState("move")
+
+for (let i = 0; i < 5; i++) {
+
+	// generate a random point on screen
+	// width() and height() gives the game dimension
+	const x = rand(0, width() / 1.3)
+	const y = rand(0, height() / 2)
+
+	add([
+		sprite("alien2"),
+		pos(x, y),
+    scale(2.2),
+    solid(),
+    area(),
+    "enemy",
+	])
+}
+
+onCollide("bullet", "enemy", (b, e) => {
+  addKaboom(e.pos.add(90))
+  destroy(e)
+  destroy(b)
   shake(10)
   cleanup()
-  // addExplode(b.pos, 1, 24, 1)
+  score++;
+  scoreLabel.text = score;
 })
-// on("bullet", "enemy", (e) => {
-//   // destroy(e)
-//   addExplosion()
-//   shake(2)
-//   // addKaboom(e.pos)
-// })

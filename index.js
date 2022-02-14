@@ -218,6 +218,7 @@ timer.onUpdate(() => {
 
 onCollide("eBullet", "player", (e, p) => {
   destroy(player)
+  window.location.reload();
   // destroy(e)
 })
 

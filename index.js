@@ -29,7 +29,8 @@ const player = add([
   // center() returns the center point vec2(width() / 2, height() / 2)
   pos(vec2(width() / 2.1, height() / 1.2)),
   solid(), 
-  area()
+  area(),
+  "player"
 ]);
  
 onKeyDown("left", () => {
@@ -112,11 +113,11 @@ add([
   fixed(),
 ])
  
-let score = 0;
-const scoreLabel = add([
-  text(score),
-  pos(24, 40)
-]);
+// let score = 0;
+// const scoreLabel = add([
+//   text(score),
+//   pos(24, 40)
+// ]);
  
 const ENEMY_SPEED = 160
  
@@ -126,7 +127,7 @@ const enemy = add([
   scale(2),
   origin("center"),
   // This enemy cycle between 3 states, and start from "idle" state
-  state("attack", [ "idle", "attack", "move", ]),
+  state("idle", [ "idle", "attack", "move", ]),
   "enemy",
   solid(),
   area(),
@@ -158,7 +159,7 @@ enemy.onStateEnter("attack", async () => {
   }
  
   await wait(2)
-  enemy.enterState("attack")
+  // enemy.enterState("attack")
  
 })
  
@@ -174,7 +175,7 @@ enemy.onStateEnter("attack", async () => {
 // })
  
 // // Have to manually call enterState() to trigger the onStateEnter("move") event we defined above.
-enemy.enterState("attack")
+enemy.enterState("idle")
 
 // for (let i = 0; i < 5; i++) {
 
@@ -201,6 +202,18 @@ onCollide("bullet", "enemy", (b, e) => {
   cleanup()
   score++;
   scoreLabel.text = score;
+})
+
+const timer = add([
+  text(0),
+  pos(12, 40),
+  fixed(),
+  { time: 0, },
+])
+
+timer.onUpdate(() => {
+  timer.time += dt()
+  timer.text = timer.time.toFixed(2)
 })
 
 onCollide("eBullet", "player", (e, p) => {
@@ -232,7 +245,7 @@ addLevel([
   ],
 })
 
-let BOSS_HEALTH = 10
+let BOSS_HEALTH = 3
 const BOSS_SPEED = 48
 
 const boss = add([
@@ -243,6 +256,7 @@ const boss = add([
   scale(3),
   origin("top"),
   "boss",
+  state("attack", [ "idle", "attack", "move", ]),
   {
     dir: 1,
   },
@@ -285,6 +299,14 @@ boss.onHurt(() => {
   healthbar.set(BOSS_HEALTH - 5)
 })
 
+add([
+  text('BOSS HEALTH', { size: 30 }),
+  color(253, 152, 67),
+  pos(width() / 10, height() / 40),
+  origin("center"),
+  fixed(),
+])
+
 on("hurt", "enemy", (e) => {
   shake(1)
   // play("hit", {
@@ -300,20 +322,101 @@ onCollide("boss", "bullet", (bos, bul) => {
   if (BOSS_HEALTH <= 0) {
     destroy(bos)
   }
+  if (BOSS_HEALTH <= 0) {
+    go("win", {
+      // time: timer.time,
+      // boss,
+    }) 
+  }
 })
 
-add([
-  text('BOSS HEALTH', { size: 30 }),
-  color(253, 152, 67),
-  pos(width() / 10, height() / 40),
-  origin("center"),
-  fixed(),
-])
+boss.onStateEnter("idle", async () => {
+  await wait(1.5)
+  boss.enterState("attack")
+})
+ 
+boss.onStateEnter("attack", async () => {
+ 
+  // Don't do anything if player doesn't exist anymore
+  if (player.exists() && boss.exists()) {
+ 
+    const dir = player.pos.sub(boss.pos).unit()
+ 
+    add([
+      pos(boss.pos.add(0, 150)),
+      move(DOWN, BULLET_SPEED),
+      rect(20, 20),
+      area(),
+      cleanup(),
+      origin("center"),
+      color(BLUE),
+      "eBullet",
+    ])
+ 
+  }
+ 
+  await wait(2)
+  boss.enterState("attack")
+ 
+})
+ 
+boss.onStateEnter("move", async () => {
+ await wait(1)
+ boss.enterState("idle")
+})
+ 
+boss.onStateUpdate("move", () => {
+ if (!player.exists()) return
+ const dir = player.pos.sub(boss.pos).unit()
+ boss.move(dir.scale(boss_SPEED))
+})
+ 
+// // Have to manually call enterState() to trigger the onStateEnter("move") event we defined above.
+boss.enterState("idle")
 
+onCollide("eBullet", "player", (e, p) => {
+  destroy(e)
+  destroy(player)
+  destroy("player")
+  destroy(p)
+})
 
+boss.onDeath(() => {
+  go("win", {
+    // time: timer.time,
+    // boss,
+  }) 
+})
 
+scene("win", ({boss}) => {
 
+	// const b = burp({
+	// 	loop: true,
+	// })
 
+	// loop(0.5, () => {
+	// 	b.detune(rand(-1200, 1200))
+	// })
 
+	add([
+		sprite("bean"),
+		color(255, 0, 0),
+		origin("center"),
+		scale(8),
+		pos(width() / 2, height() / 2),
+	])
 
+	add([
+		text('YOU WIN', 40),
+		origin("center"),
+		pos(width() / 2, height() / 6),
+    fixed()
+	])
 
+  add([
+		text(timer.time.toFixed(2) + " Seconds"),
+		origin("center"),
+		pos(width() / 2, height() / 2),
+	])
+
+})

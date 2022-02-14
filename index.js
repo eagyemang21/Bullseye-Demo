@@ -21,8 +21,7 @@ loadSprite("apple", "https://kaboomjs.com/sprites/apple.png")
  
 // for alien created in replit
 loadSprite("alien2", "alien2.png");
- 
- 
+loadSprite("player", "player.png")
 loadSprite("apple", "https://kaboomjs.com/sprites/apple.png", {
     sliceX: 0,
     sliceY: 0,
@@ -41,7 +40,7 @@ loadSprite("apple", "https://kaboomjs.com/sprites/apple.png", {
 const SPEED = 800;
  
 const player = add([
-  sprite("apple"),
+  sprite("player"),
   // center() returns the center point vec2(width() / 2, height() / 2)
   pos(vec2(width() / 2.1, height() / 1.2)),
 ]);

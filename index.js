@@ -22,28 +22,14 @@ loadSprite("apple", "https://kaboomjs.com/sprites/apple.png")
 // for alien created in replit
 loadSprite("alien2", "alien2.png");
  
- 
-loadSprite("apple", "https://kaboomjs.com/sprites/apple.png", {
-    sliceX: 0,
-    sliceY: 0,
-    // anims: {
-    //     run: {
-    //         from: 0,
-    //         to: 3,
-    //     },
-    //     jump: {
-    //         from: 3,
-    //         to: 3,
-    //     },
-    // },
-})
- 
 const SPEED = 800;
  
 const player = add([
   sprite("apple"),
   // center() returns the center point vec2(width() / 2, height() / 2)
   pos(vec2(width() / 2.1, height() / 1.2)),
+  solid(), 
+  area()
 ]);
  
 onKeyDown("left", () => {
@@ -134,8 +120,6 @@ const scoreLabel = add([
  
 const ENEMY_SPEED = 160
  
-// loadSprite("ghosty", "/sprites/ghosty.png")
- 
 const enemy = add([
   sprite("alien2"),
   pos(width() / 4, height() / 5),
@@ -162,52 +146,52 @@ enemy.onStateEnter("attack", async () => {
  
     add([
       pos(enemy.pos),
-      move(dir, BULLET_SPEED),
+      move(DOWN, BULLET_SPEED),
       rect(12, 12),
       area(),
       cleanup(),
       origin("center"),
       color(BLUE),
-      "bullet",
+      "eBullet",
     ])
  
   }
  
-  await wait(1)
-  enemy.enterState("move")
+  await wait(2)
+  enemy.enterState("attack")
  
 })
  
-enemy.onStateEnter("move", async () => {
- await wait(2)
- enemy.enterState("idle")
-})
+// enemy.onStateEnter("move", async () => {
+//  await wait(1)
+//  enemy.enterState("idle")
+// })
  
-enemy.onStateUpdate("move", () => {
- if (!player.exists()) return
- const dir = player.pos.sub(enemy.pos).unit()
- enemy.move(dir.scale(ENEMY_SPEED))
-})
+// enemy.onStateUpdate("move", () => {
+//  if (!player.exists()) return
+//  const dir = player.pos.sub(enemy.pos).unit()
+//  enemy.move(dir.scale(ENEMY_SPEED))
+// })
  
-// Have to manually call enterState() to trigger the onStateEnter("move") event we defined above.
-enemy.enterState("move")
+// // Have to manually call enterState() to trigger the onStateEnter("move") event we defined above.
+enemy.enterState("attack")
 
-for (let i = 0; i < 5; i++) {
+// for (let i = 0; i < 5; i++) {
 
-	// generate a random point on screen
-	// width() and height() gives the game dimension
-	const x = rand(0, width() / 1.3)
-	const y = rand(0, height() / 2)
+// 	// generate a random point on screen
+// 	// width() and height() gives the game dimension
+// 	const x = rand(0, width() / 1.3)
+// 	const y = rand(0, height() / 2)
 
-	add([
-		sprite("alien2"),
-		pos(x, y),
-    scale(2.2),
-    solid(),
-    area(),
-    "enemy",
-	])
-}
+// 	add([
+// 		sprite("alien2"),
+// 		pos(x, y),
+//     scale(2.2),
+//     solid(),
+//     area(),
+//     "enemy",
+// 	])
+// }
 
 onCollide("bullet", "enemy", (b, e) => {
   addKaboom(e.pos.add(90))
@@ -217,4 +201,33 @@ onCollide("bullet", "enemy", (b, e) => {
   cleanup()
   score++;
   scoreLabel.text = score;
+})
+
+onCollide("eBullet", "player", (e, p) => {
+  destroy(player)
+  // destroy(e)
+})
+
+const dir = player.pos.sub(enemy.pos).unit()
+
+addLevel([
+  "                           ",
+  "=    = =     =             ",
+  "                           ",
+  "                           ",
+  "                           ",
+  "                           ",
+  "                           ",
+], {
+  // define the size of each block
+  width: 70,
+  height: 90,
+  // define what each symbol means, by a function returning a component list (what will be passed to add())
+  "=": () => [
+      sprite("alien2"),
+      area(),
+      solid(),
+      scale(2),
+      "enemy"
+  ],
 })

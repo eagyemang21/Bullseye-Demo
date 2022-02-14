@@ -115,7 +115,7 @@ add([
 let score = 0;
 const scoreLabel = add([
   text(score),
-  pos(24, 24)
+  pos(24, 40)
 ]);
  
 const ENEMY_SPEED = 160
@@ -212,7 +212,7 @@ const dir = player.pos.sub(enemy.pos).unit()
 
 addLevel([
   "                           ",
-  "=    = =     =             ",
+  "=                          ",
   "                           ",
   "                           ",
   "                           ",
@@ -231,3 +231,89 @@ addLevel([
       "enemy"
   ],
 })
+
+let BOSS_HEALTH = 10
+const BOSS_SPEED = 48
+
+const boss = add([
+  sprite("bean"),
+  area(),
+  pos(width() / 2, 40),
+  health(BOSS_HEALTH),
+  scale(3),
+  origin("top"),
+  "boss",
+  {
+    dir: 1,
+  },
+])
+
+boss.onUpdate((p) => {
+  boss.move(BOSS_SPEED * boss.dir, 0)
+  if (boss.dir === 1 && boss.pos.x >= width() - 120) {
+    boss.dir = -1
+  }
+  if (boss.dir === -1 && boss.pos.x <= 120) {
+    boss.dir = 1
+  }
+})
+
+const healthbar = add([
+  rect(width(), 40),
+  pos(0, 0),
+  color([228, 19, 0]),
+  fixed(),
+  {
+    max: BOSS_HEALTH,
+    set(hp) {
+      this.width = width() * hp / this.max
+      this.flash = true
+    },
+  },
+])
+
+healthbar.onUpdate(() => {
+  if (healthbar.flash) {
+    healthbar.color = rgb(228, 19, 0)
+    healthbar.flash = false
+  } else {
+    healthbar.color = rgb(228, 19, 0)
+  } 
+})
+
+boss.onHurt(() => {
+  healthbar.set(BOSS_HEALTH - 5)
+})
+
+on("hurt", "enemy", (e) => {
+  shake(1)
+  // play("hit", {
+  //   detune: rand(-1200, 1200),
+  //   speed: rand(0.2, 2),
+  // })
+})
+
+onCollide("boss", "bullet", (bos, bul) => {
+  shake(3),
+  destroy(bul), 
+  healthbar.set(BOSS_HEALTH -= 1)
+  if (BOSS_HEALTH <= 0) {
+    destroy(bos)
+  }
+})
+
+add([
+  text('BOSS HEALTH', { size: 30 }),
+  color(253, 152, 67),
+  pos(width() / 10, height() / 40),
+  origin("center"),
+  fixed(),
+])
+
+
+
+
+
+
+
+

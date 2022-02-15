@@ -50,7 +50,7 @@ scene("game", () => {
   });
 
   onKeyDown("up", () => {
-    if (background.height / 2.5 <= player.pos.y) {
+    if (background.height / 3.3 <= player.pos.y) {
       player.move(0, -SPEED);
     }
   });
@@ -118,8 +118,6 @@ scene("game", () => {
     late(2),
     fixed(),
   ]);
-
-  const ENEMY_SPEED = 160;
 
   onCollide("bullet", "enemy", (b, e) => {
     addKaboom(e.pos.add(90));
@@ -284,16 +282,34 @@ scene("game", () => {
   });
 });
 
-scene("win", (timer) => {
+scene("win", () => {
   add([
     text("YOU WIN", 40),
     origin("center"),
-    pos(width() / 2, height() / 2.5),
+    pos(width() / 2, height() / 2.8),
     fixed(),
   ]);
 
   add([
-    text(timer.time + " Seconds"),
+    text("Press any key", {
+      size: 48, 
+  }),
+    origin("center"),
+    pos(width() / 2, height() / 1.5),
+    fixed(),
+  ]);
+
+  add([
+    text("to play again", {
+      size: 48, 
+  }),
+    origin("center"),
+    pos(width() / 2, height() / 1.3),
+    fixed(),
+  ]);
+
+  add([
+    text( + " Seconds"),
     origin("center"),
     pos(width() / 2, height() / 2),
   ]);

@@ -1,8 +1,8 @@
 body {
-  width: 750px !important;
-  height: 650px !important;
-  padding-left: 300px;
-  padding-top: 150px;
+  width: 600px !important;
+  height: 600px !important;
+  padding-left: 150px;
+  padding-top: 14px;
   background-color: #002247;
   display: flex;
   margin-left: 50px !important;

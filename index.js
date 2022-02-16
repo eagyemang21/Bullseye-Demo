@@ -1,5 +1,10 @@
+const mainCanvas = document.getElementById("main-screen")
+
 kaboom({
   background: [213, 251, 249],
+  height: 600,
+  width: 700,
+  canvas: mainCanvas,
 });
 
 loadSprite("player", "player.png");

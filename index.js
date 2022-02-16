@@ -2,11 +2,19 @@ const mainCanvas = document.getElementById("main-screen")
 
 kaboom({
   background: [213, 251, 249],
-  height: 600,
-  width: 700,
+  height: 650,
+  width: 750,
   canvas: mainCanvas,
 });
 
+loadSprite("player", "player.png");
+loadSprite("trophy", "1.png");
+loadSprite("heart4", "heart4.png");
+loadSprite("ship4", "ship4.png");
+loadSprite("laser", "energyBall.png");
+loadSprite("rock", "rock2.png");
+loadSprite("background", "planets.jpg");
+loadSprite("ship5", "ship5.png");
 loadSprite("player", "sprites/player.png");
 loadSprite("heart4", "sprites/heart4.png");
 loadSprite("ship4", "sprites/ship4.png");
@@ -197,6 +205,12 @@ scene("game", () => {
     },
   ]);
 
+  healthbar.onUpdate(() => {
+    if (healthbar.flash) {
+      healthbar.color = rgb(255, 0, 0);
+      healthbar.flash = false;
+    } else {
+      healthbar.color = rgb(25, 135, 84);
   healthBar.onUpdate(() => {
     if (healthBar.flash) {
       healthBar.color = rgb(158, 85, 85);
@@ -210,7 +224,7 @@ scene("game", () => {
     healthBar -= 5;
   });
 
-  add([sprite("heart4"), pos(vec2(2, -8)), scale(1)]);
+  add([sprite("ship5"), pos(vec2(5, -6)), scale(1.1)]);
 
   on("hurt", "enemy", (e) => {
     shake(1);

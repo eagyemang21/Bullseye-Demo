@@ -1,36 +1,73 @@
 #main-screen {
-  /* width: 600px !important;
-  height: 600px !important; */
-  /* padding-left: 150px; */
-  /* padding-top: 14px; */
   margin: auto !important;
-  /* margin-left: 50px !important; */
   display: block;
 }
 
 body {
-  background-color: bisque;
+  background-color: #212529;
+  height: 800px !important;
+}
+
+.directions {
+  font-size: 300%;
+  margin-top: -550px !important;
+  margin-left: 75px;
+  font-family:'VT323';
+  color: #fd7e14;
+  margin-bottom: -30px !important;
 }
 
 .gameName {
-  font-size: 100px;
+  font-size: 80px;
   font-family:'VT323';
-  color: #a5e5d5;
+  color: #fd7e14;
   display: flex;
   justify-content: center;
-  padding-bottom: -500px !important;
-  /* text-shadow: 1px 1px 0px red !important; */
+  margin-bottom: 15px !important;
+  margin-top: 15px !important;
 }
 
-/* .secondName {
-  color: white;
-  padding-top: -130px;
-  font-family: "VT323";
-  font-size: 100px;
-  color: #dc3545;
-} */
+h2 {
+  font-size: 300%;
+  margin-left: 115px;
+  font-family:'VT323';
+  color: #fd7e14;
+  margin-bottom: -30px !important;
+  margin-top: 90px !important;
+}
 
-/* h1 {
-  margin-left: -80px !important;
-  margin-right: 90px;
-} */
+.steps {
+  font-size: 30px;
+  font-family:'VT323';
+  color: #a5e5d5
+}
+
+.step1 {
+  margin-left: 150px !important;
+  margin-bottom: -20px !important;
+}
+
+.step2 {
+  margin-left: 100px !important;
+  margin-bottom: -20px !important;
+}
+
+.step3 {
+  margin-left: 150px !important;
+  margin-bottom: -20px !important;
+}
+
+.step4 {
+  margin-left: 150px !important;
+  margin-bottom: -20px !important;
+}
+
+.arrow {
+  margin-left: 100px !important;
+  margin-bottom: -20px !important;
+}
+
+.space {
+  margin-left: 105px !important;
+  margin-bottom: -20px !important;
+}

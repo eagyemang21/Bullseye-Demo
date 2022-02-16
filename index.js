@@ -7,6 +7,8 @@ kaboom({
   canvas: mainCanvas,
 });
 
+volume(0.3)
+
 loadSprite("player", "player.png");
 loadSprite("trophy", "1.png");
 loadSprite("heart4", "heart4.png");
@@ -15,6 +17,8 @@ loadSprite("laser", "energyBall.png");
 loadSprite("rock", "rock2.png");
 loadSprite("background", "planets.jpg");
 loadSprite("ship5", "ship5.png");
+loadSprite("playerLaser", "playerBullet.png")
+loadSound("pew", "pew-pew-lame-sound-effect.mp3")
 
 scene("game", () => {
   let background = add([
@@ -65,12 +69,10 @@ scene("game", () => {
 
   function spawnBullet(p) {
     add([
-      rect(12, 48),
+      sprite("playerLaser"),
       area(),
       pos(p),
       origin("center"),
-      color(255, 0, 0),
-      outline(4),
       move(UP, BULLET_SPEED),
       cleanup(),
       "bullet",
@@ -78,7 +80,8 @@ scene("game", () => {
   }
 
   onKeyPress("space", () => {
-    spawnBullet(player.pos.add(30, 0));
+    spawnBullet(player.pos.add(30, 50));
+    play("pew")
   });
 
   function late(t) {

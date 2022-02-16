@@ -129,7 +129,6 @@ scene("game", () => {
   ]);
 
   onCollide("bullet", "enemy", (b, e) => {
-    addKaboom(e.pos.add(90));
     destroy(e);
     destroy(b);
     shake(10);
@@ -142,7 +141,7 @@ scene("game", () => {
       size: 20,
       width: 10,
     },
-    pos(12, 30),
+    pos(40, -90),
     fixed(),
     { time: 0 },
   ]);
@@ -272,7 +271,7 @@ scene("game", () => {
     add([sprite("rock"), pos(p), solid(0.2), area(), "enemy"]);
   }
 
-  loop(1.5, () => {
+  loop(1.2, () => {
     spawnMinions(boss.pos.add(0, 170));
   });
 
@@ -296,33 +295,30 @@ scene("game", () => {
 scene("win", () => {
   add([
     text("YOU WIN", 40),
+    color(0, 241, 0),
     origin("center"),
-    pos(width() / 2, height() / 2.8),
+    pos(width() / 2, height() / 3),
     fixed(),
   ]);
 
   add([
-    text("Press any key", {
-      size: 48, 
-  }),
+    text("Press enter", {
+      size: 48,
+    }),
+    color(165, 229, 213),
     origin("center"),
-    pos(width() / 2, height() / 1.5),
+    pos(width() / 2, height() / 2.3),
     fixed(),
   ]);
 
   add([
     text("to play again", {
-      size: 48, 
-  }),
+      size: 48,
+    }),
+    color(165, 229, 213),
     origin("center"),
-    pos(width() / 2, height() / 1.3),
+    pos(width() / 2, height() / 1.9),
     fixed(),
-  ]);
-
-  add([
-    text( + " Seconds"),
-    origin("center"),
-    pos(width() / 2, height() / 2),
   ]);
 
   wait(1, () => {
@@ -333,25 +329,27 @@ scene("win", () => {
 scene("lose", () => {
   add([
     text("You Lose"),
-    pos(width() / 2, height() / 2 + 20),
+    pos(width() / 2, height() / 3),
     origin("center"),
-    color(0, 0, 0),
+    color(220, 53, 69),
   ]);
   add([
-    text("Press any key", {
-      size: 48, 
-  }),
+    text("Press enter", {
+      size: 48,
+    }),
+    color(165, 229, 213),
     origin("center"),
-    pos(width() / 2, height() / 1.5),
+    pos(width() / 2, height() / 2.3),
     fixed(),
   ]);
 
   add([
     text("to play again", {
-      size: 48, 
-  }),
+      size: 48,
+    }),
+    color(165, 229, 213),
     origin("center"),
-    pos(width() / 2, height() / 1.3),
+    pos(width() / 2, height() / 1.9),
     fixed(),
   ]);
 

@@ -205,12 +205,12 @@ scene("game", () => {
     },
   ]);
 
-  healthbar.onUpdate(() => {
-    if (healthbar.flash) {
-      healthbar.color = rgb(255, 0, 0);
-      healthbar.flash = false;
+  healthBar.onUpdate(() => {
+    if (healthBar.flash) {
+      healthBar.color = rgb(255, 0, 0);
+      healthBar.flash = false;
     } else {
-      healthbar.color = rgb(25, 135, 84)
+      healthBar.color = rgb(25, 135, 84)
     };
   });
 

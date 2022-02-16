@@ -24,7 +24,7 @@ loadSprite("explosion", "sprites/ex.png")
 loadSprite("rock", "sprites/rock2.png");
 loadSprite("background", "sprites/planets.jpg");
 
-loadSound("pew", "sounds/pew.mp3");
+loadSound("pew", "sounds/pew-pew-lame-sound-effect.mp3");
 
 scene("game", () => {
   let background = add([

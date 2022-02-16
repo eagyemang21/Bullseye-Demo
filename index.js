@@ -2,8 +2,8 @@ const mainCanvas = document.getElementById("main-screen")
 
 kaboom({
   background: [213, 251, 249],
-  height: 600,
-  width: 700,
+  height: 650,
+  width: 750,
   canvas: mainCanvas,
 });
 
@@ -14,6 +14,7 @@ loadSprite("ship4", "ship4.png");
 loadSprite("laser", "energyBall.png");
 loadSprite("rock", "rock2.png");
 loadSprite("background", "planets.jpg");
+loadSprite("ship5", "ship5.png");
 
 scene("game", () => {
   let background = add([
@@ -193,10 +194,10 @@ scene("game", () => {
 
   healthbar.onUpdate(() => {
     if (healthbar.flash) {
-      healthbar.color = rgb(158, 85, 85);
+      healthbar.color = rgb(255, 0, 0);
       healthbar.flash = false;
     } else {
-      healthbar.color = rgb(158, 85, 85);
+      healthbar.color = rgb(25, 135, 84);
     }
   });
 
@@ -204,7 +205,7 @@ scene("game", () => {
     healthbar -= 5;
   });
 
-  add([sprite("heart4"), pos(vec2(2, -8)), scale(1)]);
+  add([sprite("ship5"), pos(vec2(5, -6)), scale(1.1)]);
 
   on("hurt", "enemy", (e) => {
     shake(1);

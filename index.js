@@ -210,14 +210,8 @@ scene("game", () => {
       healthbar.color = rgb(255, 0, 0);
       healthbar.flash = false;
     } else {
-      healthbar.color = rgb(25, 135, 84);
-  healthBar.onUpdate(() => {
-    if (healthBar.flash) {
-      healthBar.color = rgb(158, 85, 85);
-      healthBar.flash = false;
-    } else {
-      healthBar.color = rgb(158, 85, 85);
-    }
+      healthbar.color = rgb(25, 135, 84)
+    };
   });
 
   boss.onHurt(() => {

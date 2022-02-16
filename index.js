@@ -15,7 +15,7 @@ loadSprite("laser", "energyBall.png");
 loadSprite("rock", "rock2.png");
 loadSprite("background", "planets.jpg");
 loadSprite("ship5", "ship5.png");
-
+loadSprite("playerLaser", "playerBullet.png")
 loadSound("pew", "pew-pew-lame-sound-effect.mp3");
 
 scene("game", () => {

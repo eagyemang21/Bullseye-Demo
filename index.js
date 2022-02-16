@@ -15,16 +15,8 @@ loadSprite("laser", "energyBall.png");
 loadSprite("rock", "rock2.png");
 loadSprite("background", "planets.jpg");
 loadSprite("ship5", "ship5.png");
-loadSprite("player", "sprites/player.png");
-loadSprite("heart4", "sprites/heart4.png");
-loadSprite("ship4", "sprites/ship4.png");
-loadSprite("laser", "sprites/energyBall.png");
-loadSprite("playerLaser", "sprites/playerBullet.png");
-loadSprite("explosion", "sprites/ex.png")
-loadSprite("rock", "sprites/rock2.png");
-loadSprite("background", "sprites/planets.jpg");
 
-loadSound("pew", "sounds/pew-pew-lame-sound-effect.mp3");
+loadSound("pew", "pew-pew-lame-sound-effect.mp3");
 
 scene("game", () => {
   let background = add([

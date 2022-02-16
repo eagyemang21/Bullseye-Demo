@@ -7,13 +7,16 @@ kaboom({
   canvas: mainCanvas,
 });
 
-loadSprite("player", "player.png");
-loadSprite("trophy", "1.png");
-loadSprite("heart4", "heart4.png");
-loadSprite("ship4", "ship4.png");
-loadSprite("laser", "energyBall.png");
-loadSprite("rock", "rock2.png");
-loadSprite("background", "planets.jpg");
+loadSprite("player", "sprites/player.png");
+loadSprite("heart4", "sprites/heart4.png");
+loadSprite("ship4", "sprites/ship4.png");
+loadSprite("laser", "sprites/energyBall.png");
+loadSprite("playerLaser", "sprites/playerBullet.png");
+loadSprite("explosion", "sprites/ex.png")
+loadSprite("rock", "sprites/rock2.png");
+loadSprite("background", "sprites/planets.jpg");
+
+loadSound("pew", "sounds/pew.mp3");
 
 scene("game", () => {
   let background = add([
@@ -24,7 +27,7 @@ scene("game", () => {
     fixed(),
   ]);
 
-  const SPEED = 700;
+  const playerSpeed = 600;
 
   const player = add([
     sprite("player"),
@@ -35,14 +38,14 @@ scene("game", () => {
   ]);
 
   onKeyDown("left", () => {
-    player.move(-SPEED, 0);
+    player.move(-playerSpeed, 0);
     if (player.pos.x < 0) {
       player.pos.x = width();
     }
   });
 
   onKeyDown("right", () => {
-    player.move(SPEED, 0);
+    player.move(playerSpeed, 0);
     if (player.pos.x > width()) {
       player.pos.x = 0;
     }
@@ -50,27 +53,25 @@ scene("game", () => {
 
   onKeyDown("down", () => {
     if (background.height / 2 > player.pos.y) {
-      player.move(0, SPEED);
+      player.move(0, playerSpeed);
     }
   });
 
   onKeyDown("up", () => {
     if (background.height / 3.3 <= player.pos.y) {
-      player.move(0, -SPEED);
+      player.move(0, -playerSpeed);
     }
   });
 
-  const BULLET_SPEED = 1000;
+  const playerBullet = 900;
 
   function spawnBullet(p) {
     add([
-      rect(12, 48),
+      sprite("playerLaser"),
       area(),
       pos(p),
       origin("center"),
-      color(255, 0, 0),
-      outline(4),
-      move(UP, BULLET_SPEED),
+      move(UP, playerBullet),
       cleanup(),
       "bullet",
     ]);
@@ -78,6 +79,7 @@ scene("game", () => {
 
   onKeyPress("space", () => {
     spawnBullet(player.pos.add(30, 0));
+    play("pew")
   });
 
   function late(t) {
@@ -96,7 +98,7 @@ scene("game", () => {
   }
 
   add([
-    text("KILL", { size: 160 }),
+    text("DESTROY", { size: 160 }),
     color(220, 53, 69),
     pos(width() / 2, height() / 2),
     origin("center"),
@@ -115,7 +117,7 @@ scene("game", () => {
   ]);
 
   add([
-    text("ALIENS", { size: 120 }),
+    text("SHIP", { size: 120 }),
     color(253, 152, 67),
     pos(width() / 2, height() / 2),
     origin("center"),
@@ -125,7 +127,11 @@ scene("game", () => {
   ]);
 
   onCollide("bullet", "enemy", (b, e) => {
-    addKaboom(e.pos.add(90));
+    add([
+      sprite("explosion"),
+      pos("enemy")
+    ])
+    // addKaboom(e.pos.add(90));
     destroy(e);
     destroy(b);
     shake(10);
@@ -152,14 +158,14 @@ scene("game", () => {
     destroy(player);
   });
 
-  let BOSS_HEALTH = 3;
-  const BOSS_SPEED = 48;
+  let bossHealth = 15;
+  const bossSpeed = 45;
 
   const boss = add([
     sprite("ship4"),
     area(),
     pos(width() / 2, 40),
-    health(BOSS_HEALTH),
+    health(bossHealth),
     origin("top"),
     "boss",
     state("attack", ["idle", "attack", "move"]),
@@ -169,7 +175,7 @@ scene("game", () => {
   ]);
 
   boss.onUpdate((p) => {
-    boss.move(BOSS_SPEED * boss.dir, 0);
+    boss.move(bossSpeed * boss.dir, 0);
     if (boss.dir === 1 && boss.pos.x >= width() - 120) {
       boss.dir = -1;
     }
@@ -178,12 +184,12 @@ scene("game", () => {
     }
   });
 
-  const healthbar = add([
+  let healthBar = add([
     rect(1100, 33),
     pos(25.7, 0),
     fixed(),
     {
-      max: BOSS_HEALTH,
+      max: bossHealth,
       set(hp) {
         this.width = (width() * hp) / this.max;
         this.flash = true;
@@ -191,17 +197,17 @@ scene("game", () => {
     },
   ]);
 
-  healthbar.onUpdate(() => {
-    if (healthbar.flash) {
-      healthbar.color = rgb(158, 85, 85);
-      healthbar.flash = false;
+  healthBar.onUpdate(() => {
+    if (healthBar.flash) {
+      healthBar.color = rgb(158, 85, 85);
+      healthBar.flash = false;
     } else {
-      healthbar.color = rgb(158, 85, 85);
+      healthBar.color = rgb(158, 85, 85);
     }
   });
 
   boss.onHurt(() => {
-    healthbar -= 5;
+    healthBar -= 5;
   });
 
   add([sprite("heart4"), pos(vec2(2, -8)), scale(1)]);
@@ -211,11 +217,11 @@ scene("game", () => {
   });
 
   onCollide("boss", "bullet", (bos, bul) => {
-    shake(3), destroy(bul), healthbar.set((BOSS_HEALTH -= 1));
-    if (BOSS_HEALTH <= 0) {
+    shake(3), destroy(bul), healthBar.set((bossHealth -= 1));
+    if (bossHealth <= 0) {
       destroy(bos);
     }
-    if (BOSS_HEALTH <= 0) {
+    if (bossHealth <= 0) {
       go("win", {});
     }
   });
@@ -225,12 +231,14 @@ scene("game", () => {
     boss.enterState("attack");
   });
 
+  const enemyBullet = 500;
+
   boss.onStateEnter("attack", async () => {
     if (player.exists() && boss.exists()) {
       const dir = player.pos.sub(boss.pos).unit();
       add([
         pos(boss.pos.add(0, 150)),
-        move(dir, BULLET_SPEED),
+        move(dir, enemyBullet),
         sprite("laser"),
         area(),
         cleanup(),
@@ -251,7 +259,7 @@ scene("game", () => {
   boss.onStateUpdate("move", () => {
     if (!player.exists()) return;
     const dir = player.pos.sub(boss.pos).unit();
-    boss.move(dir.scale(boss_SPEED));
+    boss.move(dir.scale(bossSpeed));
   });
 
   boss.enterState("idle");
@@ -263,10 +271,10 @@ scene("game", () => {
   });
 
   function spawnMinions(p) {
-    add([sprite("rock"), pos(p), solid(0.2), area(), "enemy"]);
+    add([sprite("rock"), pos(p), solid(), area(), "enemy"]);
   }
 
-  loop(1.5, () => {
+  loop(1.2, () => {
     spawnMinions(boss.pos.add(0, 170));
   });
 
@@ -331,6 +339,25 @@ scene("lose", () => {
     origin("center"),
     color(0, 0, 0),
   ]);
+
+add([
+    text("Press any key", {
+      size: 48, 
+  }),
+    origin("center"),
+    pos(width() / 2, height() / 1.5),
+    fixed(),
+  ]);
+
+  add([
+    text("to play again", {
+      size: 48, 
+  }),
+    origin("center"),
+    pos(width() / 2, height() / 1.3),
+    fixed(),
+  ]);
+
   wait(1.5, () => {
     onKeyPress(() => go("game"));
   });
